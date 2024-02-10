@@ -14,12 +14,19 @@ public class HlavniProgram {
     public void start() {
         Color barvaCary;
 
-        //cast 1: priprava
-        nakresliBarevnyRovnostrannyTrojuhelnik(70.0, new Color(0x0D519E));
-        nakresliBarevnyCtverec(70, new Color(0x9E0D8B));
-        nakresliBarevnyObdelnik(100,150, new Color(0x179E0D));
-        nakresliBarevneKolecko(30, 30, Color.orange);
-        nakresliBarevnyRovnoramennyTrojuhelnik(50, Color.black);
+//        //cast 1: priprava
+//        nakresliBarevnyRovnostrannyTrojuhelnik(70.0, new Color(0x0D519E));
+//        nakresliBarevnyCtverec(70, new Color(0x9E0D8B));
+//        nakresliBarevnyObdelnik(100,150, new Color(0x179E0D));
+//        nakresliBarevneKolecko(30, 30, Color.orange);
+//        nakresliBarevnyPravouhlyTrojuhelnik(50, Color.black);
+
+        //Cast 2.1: zmrzlina
+        odchodVlevo(400);
+        zofka.turnLeft(90);
+        zofka.penDown();
+        nakresliBarevnyRovnostrannyTrojuhelnik(100, new Color(0xF39F02));
+        nakresliBarevneKolecko(100, 30, new Color(0xBB67B4));
 
     }
     //metody:
@@ -30,7 +37,7 @@ public class HlavniProgram {
             zofka.turnLeft(120.0);
         }
     }
-    public void nakresliBarevnyRovnoramennyTrojuhelnik(double velikostStrany, Color barvaCary) {
+    public void nakresliBarevnyPravouhlyTrojuhelnik(double velikostStrany, Color barvaCary) {
         zofka.setPenColor(barvaCary);
         var velikostPrepony = Math.sqrt(2*Math.pow(velikostStrany, 2));
         zofka.move(velikostStrany);
@@ -68,13 +75,13 @@ public class HlavniProgram {
      * mnohoúhelníku, druhá přepona je ona kolmice. Známý úhel je úhel u středu mnohoúhelníky, který je polovinou
      * středového úhlu mnohoúhelníku.
      *
-     * @param polomer Poloměr kolečka – vzdálenost mezi středem a vrcholem mnohoúhelíku.
+     * @param prumer Průměr kolečka.
      * @param pocetStran Počet stran mnohoúhelníku. Doporučeno volit číslo, které je celočíselným dělitelem 360.
      * @param barvaCary Barva kolečka.
      */
-    public void nakresliBarevneKolecko(double polomer, double pocetStran, Color barvaCary) {
+    public void nakresliBarevneKolecko(double prumer, double pocetStran, Color barvaCary) {
         zofka.penUp();
-        zofka.move(polomer);
+        zofka.move(prumer);
         zofka.penDown();
         zofka.setPenColor(barvaCary);
 
@@ -86,7 +93,7 @@ public class HlavniProgram {
         // úhel = polovina vnitřního úhlu
         // přepona = spojnice středu a vrcholu
         // odvěsna = polovina strany mnohoúhelníku
-        double delkaStrany = (double) (Math.sin(Math.PI * (double) uhel / 360d) * polomer * 2);
+        double delkaStrany = (double) (Math.sin(Math.PI * (double) uhel / 360d) * prumer);
 
         zofka.turnRight(90);
         for (int i = 0; i < pocetStran; i++) {
@@ -94,5 +101,11 @@ public class HlavniProgram {
             zofka.turnRight(uhel);
         }
         zofka.turnLeft(90);
+    }
+    public void odchodVlevo(int pixels) {
+        zofka.penUp();
+        zofka.turnLeft(90);
+        zofka.move(pixels);
+        zofka.turnRight(90);
     }
 }
