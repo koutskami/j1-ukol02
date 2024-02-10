@@ -2,6 +2,8 @@ package cz.czechitas.turtle;
 
 import dev.czechitas.java1.turtle.engine.Turtle;
 
+import java.awt.*;
+
 public class HlavniProgram {
     private Turtle zofka = new Turtle();
 
@@ -10,7 +12,87 @@ public class HlavniProgram {
     }
 
     public void start() {
-        //TODO Tady bude kód pro kreslení želví grafiky.
-    }
+        Color barvaCary;
 
+        //cast 1: priprava
+        nakresliBarevnyRovnostrannyTrojuhelnik(70.0, new Color(0x0D519E));
+        nakresliBarevnyCtverec(70, new Color(0x9E0D8B));
+        nakresliBarevnyObdelnik(100,150, new Color(0x179E0D));
+        nakresliBarevneKolecko(30, 30, Color.orange);
+        nakresliBarevnyRovnoramennyTrojuhelnik(50, Color.black);
+
+    }
+    //metody:
+    public void nakresliBarevnyRovnostrannyTrojuhelnik(double velikostStrany, Color barvaCary) {
+        zofka.setPenColor(barvaCary);
+        for (int i = 0; i < 3; i++) {
+            zofka.move(velikostStrany);
+            zofka.turnLeft(120.0);
+        }
+    }
+    public void nakresliBarevnyRovnoramennyTrojuhelnik(double velikostStrany, Color barvaCary) {
+        zofka.setPenColor(barvaCary);
+        var velikostPrepony = Math.sqrt(2*Math.pow(velikostStrany, 2));
+        zofka.move(velikostStrany);
+        zofka.turnLeft(135.0);
+        zofka.move(velikostPrepony);
+        zofka.turnLeft(135.0);
+        zofka.move(velikostStrany);
+        zofka.turnLeft(90.0);
+    }
+    public void nakresliBarevnyCtverec(double delkaStrany, Color barvaCary) {
+        zofka.setPenColor(barvaCary);
+        for (int i = 0; i < 4; i++) {
+            zofka.move(delkaStrany);
+            zofka.turnRight(90);
+        }
+    }
+    public void nakresliBarevnyObdelnik(double delkaStranyA, double delkaStranyB, Color barvaCary) {
+        int pravyUhel = 90;
+        zofka.setPenColor(barvaCary);
+        for (int i = 0; i < 2; i++) {
+            zofka.move(delkaStranyA);
+            zofka.turnRight(pravyUhel);
+            zofka.move(delkaStranyB);
+            zofka.turnRight(pravyUhel);
+        }
+    }
+    /**
+     * Nakreslí „kolečko“ – pravidelný mnohoúhelník se zadaným „poloměrem“ a počtem stran.
+     *
+     * Výpočet délky strany se provádí tak, že si mnohoúhelník rozdělím na trojúhelníky tvořené jednou
+     * stranou mnohoúhelníku a spojnicí sousedních vrcholů se středem. Jde tedy o rovnoramenný trojúhelík.
+     * Tento trojúhelník se rozdělí na dva shodné pravoúhlé trojúhelníky tím, že se vztyčí kolmice ze středu
+     * strany mnohoúhelníku, které prochází středem trojúhelníku.
+     * Přepona tohoto trojúhelníku je spojnice středu a vrcholu mnohoúhelníku, jedna přepona je polovina strany
+     * mnohoúhelníku, druhá přepona je ona kolmice. Známý úhel je úhel u středu mnohoúhelníky, který je polovinou
+     * středového úhlu mnohoúhelníku.
+     *
+     * @param polomer Poloměr kolečka – vzdálenost mezi středem a vrcholem mnohoúhelíku.
+     * @param pocetStran Počet stran mnohoúhelníku. Doporučeno volit číslo, které je celočíselným dělitelem 360.
+     * @param barvaCary Barva kolečka.
+     */
+    public void nakresliBarevneKolecko(double polomer, double pocetStran, Color barvaCary) {
+        zofka.penUp();
+        zofka.move(polomer);
+        zofka.penDown();
+        zofka.setPenColor(barvaCary);
+
+        // o kolik stupnů se musí želva otočit, když má kreslit další stranu mnohoúhelníku
+        // zároven je to velikost úhlu, který má vrchol ve středu mnohoúhelníku a spojuje střed a dva sousedící vrcholy mnohoúhelníku
+        double uhel = 360 / pocetStran;
+
+        // sinus úhlu = délka protilehlé odvěsny / délka přepony
+        // úhel = polovina vnitřního úhlu
+        // přepona = spojnice středu a vrcholu
+        // odvěsna = polovina strany mnohoúhelníku
+        double delkaStrany = (double) (Math.sin(Math.PI * (double) uhel / 360d) * polomer * 2);
+
+        zofka.turnRight(90);
+        for (int i = 0; i < pocetStran; i++) {
+            zofka.move(delkaStrany);
+            zofka.turnRight(uhel);
+        }
+        zofka.turnLeft(90);
+    }
 }
