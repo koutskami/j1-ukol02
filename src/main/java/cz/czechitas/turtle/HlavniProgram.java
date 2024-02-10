@@ -23,66 +23,85 @@ public class HlavniProgram {
 
 
         //Cast 2.1: zmrzlina
-        odchodVlevo(90, 350);
+        double stranaPrumer = 200; //delka strany kornoutu, zaroven prumer kopecku zmrzliny - lze upravovat
+
+        //nachystani pozice
+        odchodVlevo(90, 400-stranaPrumer);
         zofka.turnRight(0);
+
+        //vykresleni zmrzliny
         zofka.penDown();
-        nakresliBarevnyRovnostrannyTrojuhelnik(150, new Color(0xF39F02));
-        nakresliBarevneKolecko(150, new Color(0xBB67B4)); //Zofka kouka vlevo
+        nakresliBarevnyRovnostrannyTrojuhelnik(stranaPrumer, new Color(0xF39F02));
+        nakresliBarevneKolecko(stranaPrumer, new Color(0xBB67B4)); //Zofka kouka vlevo
 
 
         //cast 2.2: snehulak
-        odchodVpravo(180,400); //nachystani pozice
 
-        Color barvaSnehulaka = new Color(0x6D99AF); //promenna pro barvu snehulaka
+        //promenne pro snehulaka
+        Color barvaSnehulaka = new Color(0x6D99AF); //vyber barvu snehulaka
+        double stredniKoule = 150; //zmen pro upravu velikosti snehulaka; u vyssich velikosti bohuzel hlava a zaklad nelicuji presne
+        double malaKoule = stredniKoule / 3;
+        double hlavaKoule = malaKoule * 2;
+        double zakladniKoule = stredniKoule + malaKoule;
+        double sirkaSnehulaka = zakladniKoule + malaKoule;
+        double vyskaSnehukala = zakladniKoule + stredniKoule + hlavaKoule;
 
-        nakresliBarevneKolecko(150,barvaSnehulaka); //stredni koule, konci na leve strane
-        nakresliBarevneKolecko(50,barvaSnehulaka); //prava ruka
-        odchodVlevo(180,200); //soucet prumeru stredni koule a prave ruky - Z se tak dostane na levy okraj
-        nakresliBarevneKolecko(50,barvaSnehulaka);
-        odchodVpravo(180, (double) 250 /2); //Zofka jde na stred stredni koule
-        odchodVlevo(90, (double) 150 /2); //Zofka jde na horni okraj stredni koule
-        nakresliBarevneKolecko(100,barvaSnehulaka); //hlava
-        odchodVpravo(180,250); //soucet prumeru hlavy a spodni koule, Zofka je na dolnim okraji
-        nakresliBarevneKolecko(200,barvaSnehulaka); //zaklad snehulaka
-        odchodVlevo(180, (double) 450 /2); //polovina vysky snehulaka, tj. odchod do stredu, Z kouka nahoru
+        //nachystani pozice
+        odchodVpravo(180,350+malaKoule);
+
+        //vykresleni snehulaka
+        nakresliBarevneKolecko(stredniKoule,barvaSnehulaka); //stredni koule, konci na leve strane
+        nakresliBarevneKolecko(malaKoule,barvaSnehulaka); //prava ruka
+        odchodVlevo(180,stredniKoule + malaKoule); //Z se dostane na levy okraj
+        nakresliBarevneKolecko(malaKoule,barvaSnehulaka);
+        odchodVpravo(180, sirkaSnehulaka / 2); //Zofka jde na stred stredni koule
+        odchodVlevo(90, stredniKoule / 2); //Zofka jde na horni okraj stredni koule
+        nakresliBarevneKolecko(hlavaKoule,barvaSnehulaka); //snehulak ma hlavu
+        odchodVpravo(180,hlavaKoule + stredniKoule); //soucet prumeru hlavy a stredni koule, Zofka je na dolnim okraji
+        nakresliBarevneKolecko(zakladniKoule,barvaSnehulaka); //spodni koule Snehulaka
+        odchodVlevo(180, vyskaSnehukala / 2); //polovina vysky snehulaka, tj. odchod do stredu, Z kouka nahoru
 
 
         //cast 2.3: masinka
-        odchodVpravo(90,500); //Z kouka vpravo
-        zofka.turnRight(90); // nachystani pozice
-
-        //promenne pro masinku
+        //promenne pro velikost masinky
+        double vyskaBazeMasinky = 100; //zmen pro upravu velikosti masinky
+        double prumerKola = vyskaBazeMasinky + (vyskaBazeMasinky/2);
+        double polomerKola = prumerKola/2;
+        double polomerKolecka = polomerKola/2;
+        double sirkaBazeMasinky = 2 * vyskaBazeMasinky;
+        double delkaMasinky = prumerKola + sirkaBazeMasinky;
+        //zvol barvy casti masinky
         Color barvaKonstrukce = Color.black;
         Color barvaKol = Color.darkGray;
         Color barvaCumaku = new Color(0x700808);
-        double prumerKola = 150;
-        double polomerKola = prumerKola/2;
-        double polomerKolecka = polomerKola/2;
 
+        //nachystani pozice
+        odchodVpravo(90,vyskaBazeMasinky + delkaMasinky); //Z kouka vpravo
+        zofka.turnRight(90); // nachystani pozice
 
         //2.3: vykresleni masinky
         //vykresleni konstrukce
-        nakresliBarevnyObdelnik(100,200,barvaKonstrukce); //Z zacina kreslit dolu stranu A
+        nakresliBarevnyObdelnik(vyskaBazeMasinky,sirkaBazeMasinky,barvaKonstrukce); //Z zacina kreslit dolu stranu A
         zofka.penUp();
-        zofka.move(100); //Z kouka dolu
+        zofka.move(vyskaBazeMasinky); //Z kouka dolu
         zofka.turnRight(180);
-        nakresliBarevnyObdelnik(200,prumerKola,barvaKonstrukce); //Z zacina kreslit nahoru stranu A, na konci kouka nahoru
+        nakresliBarevnyObdelnik(sirkaBazeMasinky,prumerKola,barvaKonstrukce); //Z zacina kreslit nahoru stranu A, na konci kouka nahoru
         //vykresleni hlavniho kola
         zofka.turnRight(90);
         nakresliBarevneKolecko(prumerKola,barvaKol); //mame kolo, Z kouka vpravo
         //vykresleni cumaku
-        odchodVlevo(180,350); //Z kouka vlevo
+        odchodVlevo(180,delkaMasinky); //Z kouka vlevo
         odchodVlevo(90, polomerKolecka); //Z kouka dolu
         zofka.turnRight(180);
-        nakresliBarevnyPravouhlyTrojuhelnik(100, barvaCumaku); //Z kouka nahoru
+        nakresliBarevnyPravouhlyTrojuhelnik(vyskaBazeMasinky, barvaCumaku); //Z kouka nahoru
         zofka.penUp();
         zofka.move(polomerKolecka);
         //vykresleni kolecek
-        odchodVpravo(90,55);
+        odchodVpravo(90, delkaMasinky / 6.2);
         zofka.turnRight(90);
         nakresliBarevneKolecko(polomerKola,barvaKol);
         odchodVlevo(180,polomerKola);
-        odchodVpravo(90,90);
+        odchodVpravo(90,delkaMasinky / 3.8);
         zofka.turnRight(90);
         nakresliBarevneKolecko(polomerKola,barvaKol);
         zofka.penUp();
