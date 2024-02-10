@@ -40,7 +40,7 @@ public class HlavniProgram {
         Color barvaSnehulaka = new Color(0x6D99AF); //vyber barvu snehulaka
         double stredniKoule = 150; //zmen pro upravu velikosti snehulaka; u vyssich velikosti bohuzel hlava a zaklad nelicuji presne
         double malaKoule = stredniKoule / 3;
-        double hlavaKoule = malaKoule * 2;
+        double hlavaKoule = stredniKoule - malaKoule;
         double zakladniKoule = stredniKoule + malaKoule;
         double sirkaSnehulaka = zakladniKoule + malaKoule;
         double vyskaSnehukala = zakladniKoule + stredniKoule + hlavaKoule;
@@ -53,12 +53,12 @@ public class HlavniProgram {
         nakresliBarevneKolecko(malaKoule,barvaSnehulaka); //prava ruka
         odchodVlevo(180,stredniKoule + malaKoule); //Z se dostane na levy okraj
         nakresliBarevneKolecko(malaKoule,barvaSnehulaka);
-        odchodVpravo(180, sirkaSnehulaka / 2); //Zofka jde na stred stredni koule
-        odchodVlevo(90, stredniKoule / 2); //Zofka jde na horni okraj stredni koule
+        odchodVpravo(180,sirkaSnehulaka / 2); //Zofka jde na stred stredni koule
+        odchodVlevo(90,stredniKoule/2); //Zofka jde na horni okraj stredni koule
         nakresliBarevneKolecko(hlavaKoule,barvaSnehulaka); //snehulak ma hlavu
         odchodVpravo(180,hlavaKoule + stredniKoule); //soucet prumeru hlavy a stredni koule, Zofka je na dolnim okraji
         nakresliBarevneKolecko(zakladniKoule,barvaSnehulaka); //spodni koule Snehulaka
-        odchodVlevo(180, vyskaSnehukala / 2); //polovina vysky snehulaka, tj. odchod do stredu, Z kouka nahoru
+        odchodVlevo(180,vyskaSnehukala / 2); //polovina vysky snehulaka, tj. odchod do stredu, Z kouka nahoru
 
 
         //cast 2.3: masinka
@@ -162,7 +162,7 @@ public class HlavniProgram {
      * @param barvaCary Barva kolečka.
      */
     public void nakresliBarevneKolecko(double prumer, Color barvaCary) {
-        int pocetStran = 30;
+        int pocetStran = 36;
         zofka.penUp();
         zofka.move(prumer);
         zofka.penDown();
