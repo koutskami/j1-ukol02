@@ -36,7 +36,6 @@ public class HlavniProgram {
 
 
         //cast 2.2: snehulak
-
         //promenne pro snehulaka
         Color barvaSnehulaka = new Color(0x6D99AF); //vyber barvu snehulaka
         double stredniKoule = 150; //zmen pro upravu velikosti snehulaka; u vyssich velikosti bohuzel hlava a zaklad nelicuji presne
