@@ -22,11 +22,28 @@ public class HlavniProgram {
 //        nakresliBarevnyPravouhlyTrojuhelnik(50, Color.black);
 
         //Cast 2.1: zmrzlina
-        odchodVlevo(400);
-        zofka.turnLeft(90);
+        odchodVlevo(90, 350);
+        zofka.turnRight(0);
         zofka.penDown();
-        nakresliBarevnyRovnostrannyTrojuhelnik(100, new Color(0xF39F02));
-        nakresliBarevneKolecko(100, 30, new Color(0xBB67B4));
+        nakresliBarevnyRovnostrannyTrojuhelnik(150, new Color(0xF39F02));
+        nakresliBarevneKolecko(150, new Color(0xBB67B4)); //zofka kouka vlevo
+
+        //cast 2.2: snehulak
+        odchodVpravo(180,400);
+        Color barvaSnehulaka = new Color(0x6D99AF);
+        nakresliBarevneKolecko(150,barvaSnehulaka);
+        nakresliBarevneKolecko(50,barvaSnehulaka);
+        odchodVlevo(180,200);
+        nakresliBarevneKolecko(50,barvaSnehulaka);
+        odchodVpravo(180,250/2);
+        odchodVlevo(90,150/2);
+        nakresliBarevneKolecko(100,barvaSnehulaka);
+        odchodVpravo(180,250);
+        nakresliBarevneKolecko(200,barvaSnehulaka);
+        odchodVlevo(180,450/2);
+
+        //cast 2.3: masinka
+        odchodVpravo(90,400);
 
     }
     //metody:
@@ -79,7 +96,8 @@ public class HlavniProgram {
      * @param pocetStran Počet stran mnohoúhelníku. Doporučeno volit číslo, které je celočíselným dělitelem 360.
      * @param barvaCary Barva kolečka.
      */
-    public void nakresliBarevneKolecko(double prumer, double pocetStran, Color barvaCary) {
+    public void nakresliBarevneKolecko(double prumer, Color barvaCary) {
+        int pocetStran = 30;
         zofka.penUp();
         zofka.move(prumer);
         zofka.penDown();
@@ -102,10 +120,14 @@ public class HlavniProgram {
         }
         zofka.turnLeft(90);
     }
-    public void odchodVlevo(int pixels) {
+    public void odchodVlevo(int byAngle, int pixels) {
         zofka.penUp();
-        zofka.turnLeft(90);
+        zofka.turnLeft(byAngle);
         zofka.move(pixels);
-        zofka.turnRight(90);
+    }
+    public void odchodVpravo(int byAngle, int pixels) {
+        zofka.penUp();
+        zofka.turnRight(byAngle);
+        zofka.move(pixels);
     }
 }
